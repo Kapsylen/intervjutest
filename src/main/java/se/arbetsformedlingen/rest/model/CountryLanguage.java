@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 public class CountryLanguage {
 
-    @Column(name = "Language")
     @Id
     private String language;
     @Column(name = "IsOfficial")
@@ -14,7 +13,7 @@ public class CountryLanguage {
     private double percentage;
 
     @ManyToOne()
-    @JoinColumn(name="CountryCode")
+    @JoinColumn(name="CountryCode", referencedColumnName = "Code")
     private Country country;
 
     public Country getCountry() { return country; }

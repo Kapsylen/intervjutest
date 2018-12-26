@@ -39,5 +39,8 @@ public class CountryService {
         return countryJpaRep.findAllByGovernmentForm(name);
     }
 
+    public List<String> capitals(){
+        return countryJpaRep.findAllCapitals();
+    }
 
 }

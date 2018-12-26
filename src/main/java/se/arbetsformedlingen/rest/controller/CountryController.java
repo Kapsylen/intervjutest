@@ -36,4 +36,9 @@ public class CountryController {
         return countryService.findAllByGovernmentForm(govform);
     }
 
+    @GetMapping(value = "/capitals")
+    public List<String> findAllCapitals(){
+        return countryService.capitals();
+    }
+
 }
