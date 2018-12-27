@@ -9,21 +9,52 @@ import se.arbetsformedlingen.rest.service.CountryService;
 import java.util.List;
 
 
+
 @RestController
-@RequestMapping("/country")
+@RequestMapping
 public class CountryController {
 
     @Autowired
     private CountryService countryService;
 
-    @GetMapping(value = "/find/{name}")
+    @GetMapping(value = "/{name}")
     @ResponseBody
-    public ResponseEntity country(@PathVariable(value = "name", required = true) String name){
+    public ResponseEntity find(@PathVariable(value = "name", required = true) String name){
         return ResponseEntity.ok().body(countryService.findCountry(name));
     }
 
     //TODO: Controllers persists data via CountryJpaRepository
 
+
+
+    @GetMapping(value = "/countries")
+    @ResponseBody
+    public List<String> countries(){
+        return countryService.listAllCountries();    }
+
+
+    @GetMapping(value = "/country/{name}")
+    @ResponseBody
+    public List<Country> country(@PathVariable(value = "name", required = true) String name){
+       return countryService.findCountry(name);
+    }
+
+
+    @PostMapping(value = "/countries", headers = "Accept=application/json")
+    public Country add(@RequestBody Country country) {
+        return countryService.addCountry(country);
+    }
+
+
+    @PutMapping(value = "/countries", headers = "Accept=application/json")
+    public Country update(@RequestBody Country country) {
+        return countryService.update(country);
+    }
+
+    @DeleteMapping(value = "/country/{name}")
+    public void delete(@PathVariable(name = "name") String name){
+        countryService.deleteCountry(name);
+    }
 
     @GetMapping(value = "/population/greaterthan/{population}")
     @ResponseBody
@@ -41,9 +72,10 @@ public class CountryController {
         return countryService.capitals();
     }
 
-    @GetMapping(value = "/cities/{continent}")
-    public List<Country> findAllCitiesInEuropeWithAPopulationOverAMillion(@PathVariable(value = "continent") String continent){
-        return countryService.findAllCitiesInEuropeWithAPopulationOverAMillion(continent);
+    @GetMapping(value = "/cities/{continent}/{population}")
+    public List<Country> findAllCitiesInAContinentWithAPopulationEqualOrGreaterThanX(@PathVariable(value = "continent") String continent,
+                                                                                     @PathVariable(value = "population") Integer population){
+        return countryService.findAllCitiesInAContinentWithAPopulationEqualOrGreaterThanX(continent, population);
     }
 
 

@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/city")
+@RequestMapping
 public class CityController {
 
     @Autowired
@@ -23,39 +23,36 @@ public class CityController {
         return ResponseEntity.ok().body(service.findCity(name));
     }
 
-    //TODO: Create some more controllers calling different service methods
-
-
-    @GetMapping(value = "/find/capitals")
-    @ResponseBody
-    public List<City> capitals(){
-
-        return service.findAllCapital();
-    }
-
 
 
     //TODO: Controllers persists data via CityJpaRepository
 
-    @GetMapping(value = "/find/name/{name}")
+
+    @PostMapping(value = "/city",  headers = "Accept=application/json")
+    public City addCCity(@RequestBody City city) {
+        return service.addCity(city);
+    }
+
+    @GetMapping(value = "/city/{name}")
     @ResponseBody
     public City findByName(@PathVariable(value = "name") String name){
 
         return service.findByName(name);
     }
 
-    @GetMapping(value = "/all/code/{code}")
+    @GetMapping(value = "/city/code/{code}")
     @ResponseBody
     public List<City> findAllByCountryCode(@PathVariable(value = "code") String code){
         return service.findAllByCountryCode(code);
     }
 
 
-    @GetMapping(value = "/all/region/{region}")
+    @GetMapping(value = "/city/region/{region}")
     @ResponseBody
     public List<City> findAllByCountryRegion(@PathVariable(value = "region") String region){
         return service.findAllByCountryRegion(region);
     }
+
 
 
 }

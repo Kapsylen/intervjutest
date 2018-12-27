@@ -27,15 +27,6 @@ public class CityService {
 
     }
 
-    public List<City> findAllCapital(){
-
-        List<City> capitals = cityDAO.findAllCapitals();
-
-        return capitals;
-    }
-
-
-
     public City findByName(String name){
 
         return cityJpaRep.findByName(name);
@@ -54,5 +45,7 @@ public class CityService {
     }
 
 
-
+    public City addCity(City city) {
+        return cityJpaRep.save(city);
+    }
 }

@@ -6,6 +6,7 @@ import se.arbetsformedlingen.rest.repository.CountryDAO;
 import se.arbetsformedlingen.rest.model.Country;
 import se.arbetsformedlingen.rest.repository.CountryJpaRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -17,25 +18,51 @@ public class CountryService {
     @Autowired
     CountryJpaRepository countryJpaRep;
 
-    public Country findCountry(String name){
-        Country country = countryDAO.findCountry(name);
+    public List<String> listAllCountries() {
+        return  countryJpaRep.listAllCountries();
+    }
 
-        //Simple service logic
-        country.setName(country.getName().toUpperCase());
-
-        return country;
-
+    public List<Country> findCountry(String name){
+        return countryJpaRep.findAllByName(name);
     }
 
 
+    public Country addCountry(Country country) {
+        return countryJpaRep.save(country);
+    }
+
+    @Transactional
+    public Country update(Country country) {
+
+        String code = country.getCode();
+        Country updatedCountry = countryJpaRep.findByCode(code);
+
+        updatedCountry.setName(country.getName());
+        updatedCountry.setContinent(country.getContinent());
+        updatedCountry.setSurfaceArea(country.getSurfaceArea());
+        updatedCountry.setIndepYear(country.getIndepYear());
+        updatedCountry.setPopulation(country.getPopulation());
+        updatedCountry.setLifeExpectancy(country.getLifeExpectancy());
+        updatedCountry.setGnp(country.getGnp());
+        updatedCountry.setGnpOld(country.getGnpOld());
+        updatedCountry.setLocalName(country.getLocalName());
+        updatedCountry.setHeadOfState(country.getHeadOfState());
+        updatedCountry.setCapital(country.getCapital());
+        updatedCountry.setCode2(updatedCountry.getCode2());
+
+        return countryJpaRep.save(updatedCountry);
+    }
+
+    @Transactional
+    public void deleteCountry(String name) {
+       countryJpaRep.deleteCountryByName(name);
+    }
+
     public List<Country> findCountriesByPopulationIsGreaterThan(Integer population) {
-
         return countryJpaRep.findCountriesByPopulationIsGreaterThan(population);
-
     }
 
     public List<Country> findAllByGovernmentForm(String name){
-
         return countryJpaRep.findAllByGovernmentForm(name);
     }
 
@@ -43,7 +70,9 @@ public class CountryService {
         return countryJpaRep.findAllCapitals();
     }
 
-    public List<Country> findAllCitiesInEuropeWithAPopulationOverAMillion(String continent){
-        return countryJpaRep.findAllCitiesInEuropeWithAPopulationOverAMillion(continent);
+    public List<Country> findAllCitiesInAContinentWithAPopulationEqualOrGreaterThanX(String continent, Integer population){
+        return countryJpaRep.findAllCitiesInAContinentWithAPopulationEqualOrGreaterThanX(continent, population);
     }
+
+
 }

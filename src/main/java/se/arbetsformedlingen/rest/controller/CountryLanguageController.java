@@ -10,7 +10,7 @@ import se.arbetsformedlingen.rest.service.CountryLanguageService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/countrylanguage")
+@RequestMapping()
 public class CountryLanguageController {
 
     @Autowired
@@ -22,6 +22,7 @@ public class CountryLanguageController {
         return countryLangService.findOfficialLangByCountryName(name);
 
     }
+
 
 
 }

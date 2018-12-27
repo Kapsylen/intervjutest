@@ -1,6 +1,7 @@
 package se.arbetsformedlingen.rest.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity(name = "Country")
 @Table(name="country")
@@ -8,6 +9,7 @@ public class Country {
 
     @Id
     @Column(name = "Code")
+    @Size(min = 3, max = 3)
     private String code;
     @Column(name="Name")
     private String name;

@@ -11,6 +11,14 @@ import java.util.List;
 @Repository
 public interface CountryJpaRepository extends JpaRepository<Country, Integer> {
 
+    Country findByCode(String code);
+
+    @Query("SELECT c.name FROM Country c")
+    List<String> listAllCountries();
+
+    List<Country> findAllByName(String name);
+
+    void deleteCountryByName(String code);
 
     List<Country> findCountriesByPopulationIsGreaterThan(Integer population);
 
@@ -19,9 +27,7 @@ public interface CountryJpaRepository extends JpaRepository<Country, Integer> {
     @Query("SELECT c.name FROM City c, Country k where c.id = k.capital")
     List<String> findAllCapitals();
 
-    //select distinct c.* from city c, country k where k.Continent = 'europe' AND  c.CountryCode = k.Code AND c.Population >= 1000000;
-
-    @Query("SELECT c.name, c.population FROM City c, Country k where k.continent = :continent AND c.country = k.code AND c.population >= 1000000")
-    List<Country> findAllCitiesInEuropeWithAPopulationOverAMillion(@Param("continent")String continent);
+    @Query("SELECT c.name, c.population FROM City c, Country k where k.continent = :continent AND c.country = k.code AND c.population >= :population")
+    List<Country> findAllCitiesInAContinentWithAPopulationEqualOrGreaterThanX(@Param("continent")String continent, @Param("population") Integer population);
 
 }
