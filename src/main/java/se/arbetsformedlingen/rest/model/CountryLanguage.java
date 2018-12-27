@@ -2,7 +2,8 @@ package se.arbetsformedlingen.rest.model;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "CountryLanguage")
+@Table(name="countryLanguage")
 public class CountryLanguage {
 
     @Id

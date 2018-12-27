@@ -41,4 +41,10 @@ public class CountryController {
         return countryService.capitals();
     }
 
+    @GetMapping(value = "/cities/{continent}")
+    public List<Country> findAllCitiesInEuropeWithAPopulationOverAMillion(@PathVariable(value = "continent") String continent){
+        return countryService.findAllCitiesInEuropeWithAPopulationOverAMillion(continent);
+    }
+
+
 }

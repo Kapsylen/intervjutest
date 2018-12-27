@@ -43,4 +43,7 @@ public class CountryService {
         return countryJpaRep.findAllCapitals();
     }
 
+    public List<Country> findAllCitiesInEuropeWithAPopulationOverAMillion(String continent){
+        return countryJpaRep.findAllCitiesInEuropeWithAPopulationOverAMillion(continent);
+    }
 }

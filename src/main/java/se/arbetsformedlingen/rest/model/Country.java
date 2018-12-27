@@ -37,17 +37,7 @@ public class Country {
     private Integer capital;
     @Column(name = "Code2")
     private String code2;
- /*   @OneToMany(mappedBy="country", cascade = CascadeType.ALL)
-    private List<City> cities;
 
-    public List<City> getCities() {
-        return cities;
-    }
-
-    public void setCities(List<City> cities) {
-        this.cities = cities;
-    }
-*/
     public Country() {
     }
 

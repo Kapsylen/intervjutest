@@ -3,17 +3,22 @@ package se.arbetsformedlingen.rest.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import se.arbetsformedlingen.rest.model.CountryLanguage;
 import se.arbetsformedlingen.rest.repository.CountryLanguageJpaRepository;
+
+import java.util.List;
 
 @Service
 public class CountryLanguageService {
 
     @Autowired
-    private CountryLanguageJpaRepository countryLanguageJpaRep;
+    CountryLanguageJpaRepository countryLanguageJpaRepo;
 
-    public CountryLanguage findByLanguage(String name){
-      return  countryLanguageJpaRep.findByLanguage(name);
+
+
+    public List<String> findOfficialLangByCountryName(String name){
+
+        return countryLanguageJpaRepo.findOfficialLangByCountryName(name);
+
     }
 
 }
